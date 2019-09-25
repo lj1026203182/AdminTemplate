@@ -9,7 +9,7 @@
 <!-- 登陆 -->
 <template>
   <div class="login" @keydown.enter="handleSubmit">
-    <vue-particles color="#c7f0db"></vue-particles>
+    <!-- <vue-particles color="#c7f0db"></vue-particles> -->
     <div class="login-con">
       <Card :bordered="false">
         <p slot="title"><Icon type="log-in"></Icon>欢迎登录</p>

@@ -12,15 +12,15 @@ import router from './router'
 import store from './store'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
-import VueParticles from 'vue-particles'
+import './assets/css/atom.css'
+import VueParticles from 'vue-particles' // 粒子效果
 import config from './config/config'
 import TreeTable from 'tree-table-vue'
-
 
 Vue.prototype.$config = config
 
 Vue.use(iView)
-Vue.use(VueParticles)
+// Vue.use(VueParticles)
 Vue.use(TreeTable)
 Vue.config.productionTip = false
 

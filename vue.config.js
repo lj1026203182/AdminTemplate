@@ -4,9 +4,9 @@
  * @Author: Lj
  * @Date: 2019-08-07 09:32:26
  * @LastEditors: Lj
- * @LastEditTime: 2019-09-05 09:38:26
+ * @LastEditTime: 2019-09-05 09:50:11
  */
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 // 本地环境是否需要使用cdn
 const devNeedCdn = false
 
@@ -31,15 +31,15 @@ const cdn = {
 // gzip压缩
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
+// 引入babel-polyfill
+require('babel-polyfill')
+
 module.exports = {
   // publicPath: '/home',
   lintOnSave: false,
   productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
   transpileDependencies: [ // 指定对第三方依赖包进行babel-polyfill处理
-    'vue-particles',
-    'xlsx',
-    'v-viewer',
-    'tree-table-vue'
+    'iview', 'axios', 'tree-table-vue', 'wangeditor', 'v-viewer'
   ],
   chainWebpack: config => {
     // 解决ie11兼容ES6
@@ -63,14 +63,14 @@ module.exports = {
       if (isProduction || devNeedCdn) args[0].cdn = cdn
       return args
     })
-    // ============注入cdn start============
+    // ============注入cdn end============
   },
   configureWebpack: config => {
     // 用cdn方式引入，则构建时要忽略相关资源
     if (isProduction || devNeedCdn) config.externals = cdn.externals
     // 生产环境
     if (isProduction) {
-      // gzip压缩
+      // ============gzip压缩 start============
       const productionGzipExtensions = ['html', 'js', 'css']
       config.plugins.push(
         new CompressionWebpackPlugin({
@@ -84,8 +84,9 @@ module.exports = {
           deleteOriginalAssets: false // 删除原文件
         })
       )
+      // ============gzip压缩 end============
 
-      // 公共代码抽离
+      // ============公共代码抽离 start============
       config.optimization = {
         splitChunks: {
           cacheGroups: {
@@ -113,6 +114,7 @@ module.exports = {
           }
         }
       }
+      // ============公共代码抽离 end============
     }
   }
 }
